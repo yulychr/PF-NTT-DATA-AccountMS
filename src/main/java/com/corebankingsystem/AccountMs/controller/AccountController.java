@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/accounts/")
 public class AccountController {
 
     private final RestTemplate restTemplate = new RestTemplate();
@@ -22,12 +22,11 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @PostMapping ("/cuentas")
-    @ResponseStatus(HttpStatus.CREATED) // Respuesta 201 cuando se crea la cuenta
+    @PostMapping
     public ResponseEntity<Object> createAccount(@Valid @RequestBody Account account) {
 
         try {
-            String url = "http://localhost:8086/api/clientes/" + account.getCustomerId() ;
+            String url = "http://localhost:8086/customers/" + account.getCustomerId() ;
             restTemplate.getForObject(url, String.class);
         } catch (HttpClientErrorException e) {
             String message = "The customer ID does not exist ";
@@ -45,38 +44,37 @@ public class AccountController {
         return  ResponseEntity.status(201).body(localAccount);
     }
 
-    @GetMapping ("/cuentas")
+    @GetMapping
     public ResponseEntity<List<Account>> getAllAccounts() {
         List<Account> accounts = accountService.getAccounts();
         return ResponseEntity.status(200).body(accounts);
     }
 
-    @GetMapping("/cuentas/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Account> getAccountId(@PathVariable Long id) {
         Optional<Account> account = accountService.getAccountId(id);
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/cuentas/{id}/depositar")
+    @PutMapping("/{id}/deposit")
     public ResponseEntity<Object> deposit(@PathVariable Long id, @RequestParam Double amount) {
         return accountService.deposit(id, amount);
     }
 
-    @PutMapping("/cuentas/{id}/retirar")
+    @PutMapping("/{id}/withdraw")
     public ResponseEntity<Object> withdraw(@PathVariable Long id, @RequestParam Double amount) {
         return accountService.withdraw(id, amount);
     }
 
-    @DeleteMapping("/cuentas/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteAccountId(@PathVariable Long id) {
         return accountService.deleteAccount(id);
     }
 
     // EndPoint para saber si el cliente tiene cuentas activas
-    @GetMapping ("/cuentas/cliente/{id}")
+    @GetMapping ("/customer/{id}")
     public ResponseEntity<List<Account>> getAccountsByCustomerId(@PathVariable Long id) {
         Optional<List<Account>> account = accountService.getCustomerId(id);
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
 }
