@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "021adbf0-3bec-4f98-80e2-aa57c8d7d9c7",
+		"name": "AccountMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "39401715"
+	},
+	"item": [
+		{
+			"name": "Create Account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"balance\": 321.56,\r\n    \"typeAccount\": \"ahorros\",\r\n    \"customerId\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8087/accounts/"
+			},
+			"response": []
+		},
+		{
+			"name": "List Account",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8087/accounts/"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Account by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8087/accounts/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Deposit",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8087/accounts/1/deposit?amount=100",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"accounts",
+						"1",
+						"deposit"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Withdraw",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8087/accounts/2/withdraw?amount=200",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"accounts",
+						"2",
+						"withdraw"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "200"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Account by Id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8087/accounts/43"
+			},
+			"response": []
+		},
+		{
+			"name": "Deposit by accounNumber",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"accountNumber\":\"317337\",\r\n    \"amount\":100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8087/accounts/tDeposit"
+			},
+			"response": []
+		},
+		{
+			"name": "Withdrawal by accounNumber",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"accountNumber\":\"317337\",\r\n    \"amount\":51.56\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8087/accounts/tWithdrawal"
+			},
+			"response": []
+		},
+		{
+			"name": "Get by accountNumber",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8087/accounts/byAccountNumber/10"
+			},
+			"response": []
+		}
+	]
+}
