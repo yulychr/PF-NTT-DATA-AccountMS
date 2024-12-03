@@ -1,5 +1,7 @@
 package com.corebankingsystem.AccountMs.controller;
 
+import com.corebankingsystem.AccountMs.DTO.DepositRequestDTO;
+import com.corebankingsystem.AccountMs.DTO.WithdrawalRequestDTO;
 import com.corebankingsystem.AccountMs.model.entity.Account;
 import com.corebankingsystem.AccountMs.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,4 +79,44 @@ public class AccountController {
         Optional<List<Account>> account = accountService.getCustomerId(id);
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    //GET endpoint to retrieve account details by account number received from TransactionMS
+    @GetMapping("/byAccountNumber/{accountNumber}")
+    public ResponseEntity<Account> getAccountByNumber(@PathVariable String accountNumber) {
+        Optional<Account> account = accountService.getAccountByNumber(accountNumber);
+        if (account.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(account.get());
+    }
+    //POST endpoint to receive deposit information from TransactionMS and process deposit in the specified account
+    @PostMapping("/tDeposit")
+    public ResponseEntity<?> tDeposit(@RequestBody DepositRequestDTO depositRequestDTO) {
+        Optional<Account> accountD = accountService.getAccountByNumber(depositRequestDTO.getAccountNumber());
+        if (accountD.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        long id = accountD.get().getId();
+        ResponseEntity<Object> updatedAccount = accountService.deposit(id, depositRequestDTO.getAmount());
+        if (updatedAccount == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(updatedAccount);
+    }
+
+    //POST endpoint to receive deposit information from TransactionMS and process Withdrawal in the specified account
+    @PostMapping("/tWithdrawal")
+    public ResponseEntity<?> tWithdrawal(@RequestBody WithdrawalRequestDTO withdrawalRequestDTO) {
+        Optional<Account> accountD = accountService.getAccountByNumber(withdrawalRequestDTO.getAccountNumber());
+        if (accountD.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        long id = accountD.get().getId();
+        ResponseEntity<Object> updatedAccount = accountService.withdraw(id, withdrawalRequestDTO.getAmount());
+        if (updatedAccount == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(updatedAccount);
+    }
+
 }

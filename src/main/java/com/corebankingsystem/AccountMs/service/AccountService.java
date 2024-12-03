@@ -15,6 +15,7 @@ public interface AccountService {
     public ResponseEntity<Object> deleteAccount(Long id);
     public Account createAccount(double balance, Account.TypeAccount typeAccount, long customerId) ;
     public Optional<List<Account>> getCustomerId(Long id) ;
+    public Optional<Account> getAccountByNumber(String accountNumber);
 
 
 

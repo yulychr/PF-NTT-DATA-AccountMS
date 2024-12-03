@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -96,5 +97,10 @@ public class AccountServiceImpl implements AccountService {
         Random random = new Random();
         int number = 100000 + random.nextInt(900000); // Genera un número entre 100000 y 999999
         return String.valueOf(number);
+    }
+
+    @Override
+    public Optional<Account> getAccountByNumber(String accountNumber) {
+        return accountRepository.findByAccountNumber(accountNumber);
     }
 }
