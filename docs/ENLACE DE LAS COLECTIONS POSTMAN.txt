@@ -1,1 +1,1 @@
-https://www.postman.com/yulyschr/pruebas-apis-nttdata/collection/39401715-28edb3e0-0dfa-4ce6-9844-a3b36cc2de96
+https://www.postman.com/yulyschr/test-api-accountms/overview
