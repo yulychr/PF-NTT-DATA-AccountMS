@@ -70,7 +70,7 @@ This collection includes all the endpoints and examples for testing the API.
 
 You can find additional documentation for the project in the following documents:
 
-[Analysis of SOLID Principles and Design Patterns](https://github.com/user-attachments/files/18002803/Analis.de.principios.solid.y.patrones.de.diseno.docx)
-[Unit Testing and CheckStyle](https://github.com/user-attachments/files/18002804/Pruebas.unitarias.y.checkStyle.docx)
+- [Analysis of SOLID Principles and Design Patterns](https://github.com/user-attachments/files/18002803/Analis.de.principios.solid.y.patrones.de.diseno.docx)
+- [Unit Testing and CheckStyle](https://github.com/user-attachments/files/18002804/Pruebas.unitarias.y.checkStyle.docx)
 
 Please refer to these documents for a detailed analysis of the SOLID principles, design patterns used, unit testing practices, and code style checks.
