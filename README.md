@@ -56,7 +56,7 @@ This approach ensures that accounts are only created for valid, existing custome
 
 You can find the Postman collection for testing the **AccountMS** API at the following link:
 
-[CustomerMS Postman Collection](https://www.postman.com/yulyschr/test-api-accountms/overview))
+[CustomerMS Postman Collection](https://www.postman.com/yulyschr/test-api-accountms/overview)
 
 This collection includes all the endpoints and examples for testing the API.
 
