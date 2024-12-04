@@ -12,7 +12,7 @@ This microservice is responsible for the creation, query, and management of bank
 - **GET /cuentas/{id}**: Retrieves the details of a bank account by its ID.
 - **PUT /cuentas/{cuentaId}/depositar**: Makes a deposit into a bank account.
 - **PUT /cuentas/{cuentaId}/retirar**: Makes a withdrawal from a bank account.
-- **DELETE /cuentas/{id}**: Deletes a bank account.
+- **DELETE /cuentas/{id}**: Delete a bank account by ID.
 
 ### Interaction with TransactionMS
 
