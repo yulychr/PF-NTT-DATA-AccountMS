@@ -8,11 +8,11 @@ This microservice is responsible for the creation, query, and management of bank
 
 ### Bank Account Management
 
-- **POST /cuentas**: Creates a new bank account for a customer.
-- **GET /cuentas/{id}**: Retrieves the details of a bank account by its ID.
-- **PUT /cuentas/{cuentaId}/depositar**: Makes a deposit into a bank account.
-- **PUT /cuentas/{cuentaId}/retirar**: Makes a withdrawal from a bank account.
-- **DELETE /cuentas/{id}**: Delete a bank account by ID.
+- **POST /accounts**: Creates a new bank account for a customer.
+- **GET /accounts/{id}**: Retrieves the details of a bank account by its ID.
+- **PUT /accounts/{accountId}/depositar**: Makes a deposit into a bank account.
+- **PUT /accounts/{accountsId}/retirar**: Makes a withdrawal from a bank account.
+- **DELETE /accounts/{id}**: Delete a bank account by ID.
 
 ### Interaction with TransactionMS
 
@@ -60,6 +60,22 @@ You can find the Postman collection for testing the **AccountMS** API at the fol
 
 This collection includes all the endpoints and examples for testing the API.
 
+## Database Setup
+
+To set up the database for the project, you can use the provided SQL script:
+
+- **[Download core_banking_system2.sql](https://github.com/yulychr/PF-NTT-DATA-AccountMS/blob/main/docs/script%20core_banking_system2.sql)**: This script contains the necessary database schema and initial data for the core banking system.
+
+You can run this script to create the required tables and populate the database with initial data for the system to function correctly.
+
+### How to Run the Script
+1. Download the script by clicking the link above.
+2. Access your database management tool (MySQL).
+3. Open the SQL script.
+4. Execute the script in your database to set up the schema.
+
+This will create the necessary database structure and ensure that the system has the required data to operate.
+
 ## DIAGRAMs
 
 ### Sequence diagram
@@ -70,7 +86,7 @@ This collection includes all the endpoints and examples for testing the API.
 
 You can find additional documentation for the project in the following documents:
 
-- [Analysis of SOLID Principles and Design Patterns](https://github.com/user-attachments/files/18002803/Analis.de.principios.solid.y.patrones.de.diseno.docx)
-- [Unit Testing and CheckStyle](https://github.com/user-attachments/files/18002804/Pruebas.unitarias.y.checkStyle.docx)
+- [Analysis of SOLID Principles and Design Patterns](https://github.com/yulychr/PF-NTT-DATA-AccountMS/blob/main/docs/Analis%20de%20principios%20solid%20y%20patrones%20de%20dise%C3%B1o.docx)
+- [Unit Testing and CheckStyle](https://github.com/yulychr/PF-NTT-DATA-AccountMS/blob/main/docs/Pruebas%20unitarias.docx)
 
 Please refer to these documents for a detailed analysis of the SOLID principles, design patterns used, unit testing practices, and code style checks.
