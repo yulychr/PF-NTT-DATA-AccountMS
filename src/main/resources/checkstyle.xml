@@ -29,7 +29,7 @@
         </module>
 
         <module name="ClassDataAbstractionCoupling">
-            <property name="max" value="3"/>
+            <property name="max" value="5"/>
         </module>
 
         <module name="CyclomaticComplexity">

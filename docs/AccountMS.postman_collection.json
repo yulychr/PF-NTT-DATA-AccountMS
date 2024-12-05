@@ -25,6 +25,42 @@
 			"response": []
 		},
 		{
+			"name": "Try Create account with balance negative",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"balance\": -321.56,\r\n    \"typeAccount\": \"ahorros\",\r\n    \"customerId\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8087/accounts/"
+			},
+			"response": []
+		},
+		{
+			"name": "Try Create account with customer not exist",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"balance\": 321.56,\r\n    \"typeAccount\": \"ahorros\",\r\n    \"customerId\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8087/accounts/"
+			},
+			"response": []
+		},
+		{
 			"name": "List Account",
 			"request": {
 				"method": "GET",
@@ -70,6 +106,33 @@
 			"response": []
 		},
 		{
+			"name": "Deposit with negative amount",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8087/accounts/1/deposit?amount=-100",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"accounts",
+						"1",
+						"deposit"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "-100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Withdraw",
 			"request": {
 				"method": "PUT",
@@ -106,13 +169,13 @@
 			"response": []
 		},
 		{
-			"name": "Deposit by accounNumber",
+			"name": "TDeposit by accounNumber",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"accountNumber\":\"317337\",\r\n    \"amount\":100\r\n}",
+					"raw": "{\r\n    \"accountNumber\":\"658445\",\r\n    \"amount\":100\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -124,13 +187,13 @@
 			"response": []
 		},
 		{
-			"name": "Withdrawal by accounNumber",
+			"name": "TWithdrawal by accounNumber",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"accountNumber\":\"317337\",\r\n    \"amount\":51.56\r\n}",
+					"raw": "{\r\n    \"accountNumber\":\"317337\",\r\n    \"amount\":50\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -146,7 +209,16 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8087/accounts/byAccountNumber/10"
+				"url": "http://localhost:8087/accounts/byAccountNumber/150938"
+			},
+			"response": []
+		},
+		{
+			"name": "Get list account by customerID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8087/accounts/customer/1"
 			},
 			"response": []
 		}

@@ -12,13 +12,11 @@ public interface AccountService {
     public Optional<Account> getAccountId(Long id);
     public ResponseEntity<Object> deposit(Long accountId, Double amount);
     public ResponseEntity<Object> withdraw(Long accountId, Double amount);
-    public ResponseEntity<Object> deleteAccount(Long id);
-    public Account createAccount(double balance, Account.TypeAccount typeAccount, long customerId) ;
+    public ResponseEntity<?> deleteAccount(Long id);
+    public Account createAccount(Account account) ;
     public Optional<List<Account>> getCustomerId(Long id) ;
     public Optional<Account> getAccountByNumber(String accountNumber);
-
-
-
-
+    public ResponseEntity<Object> tDeposit(String accountNumber, double amount);
+    public ResponseEntity<Object> tWithdrawal(String accountNumber, double amount);
 
 }

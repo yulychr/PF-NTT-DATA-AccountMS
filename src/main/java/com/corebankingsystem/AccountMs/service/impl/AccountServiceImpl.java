@@ -1,8 +1,11 @@
 package com.corebankingsystem.AccountMs.service.impl;
 
+import com.corebankingsystem.AccountMs.exception.CustomerNotFoundException;
+import com.corebankingsystem.AccountMs.exception.InvalidBalanceException;
 import com.corebankingsystem.AccountMs.model.entity.Account;
 import com.corebankingsystem.AccountMs.repository.AccountRepository;
 import com.corebankingsystem.AccountMs.service.AccountService;
+import com.corebankingsystem.AccountMs.service.CustomerService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +19,29 @@ import java.util.Random;
 public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private CustomerService customerService;
+
 
     // Metodo para crear una nueva cuenta
     @Override
-    public Account createAccount(double balance, Account.TypeAccount typeAccount, long customerId) {
-        String accountNumber = generateAccountNumber();
-        while (accountRepository.existsByAccountNumber(accountNumber)) {
-            accountNumber = generateAccountNumber(); // Genera un nuevo número si ya existe
+    public Account createAccount(Account account) {
+        if (!customerService.isValidCustomer(account.getCustomerId())) {
+            throw new CustomerNotFoundException("The Customer with ID " + account.getCustomerId() + " does not exist");
         }
-        Account account = new Account(null, accountNumber, balance, typeAccount, customerId);
-        return accountRepository.save(account);
+        if (account.getBalance() <= 0) {
+            throw new InvalidBalanceException("Balance must be positive");
+        }
+        String accountNumber = generateAccountNumber();
+
+        Account newAccount = new Account(
+                null,
+                accountNumber,
+                account.getBalance(),
+                account.getTypeAccount(),
+                account.getCustomerId()
+        );
+        return accountRepository.save(newAccount);
     }
 
     @Override
@@ -45,7 +61,7 @@ public class AccountServiceImpl implements AccountService {
             String message = "Invalid deposit amount. Amount must be positive.";
             return ResponseEntity.status(400).body(message);
         }
-        account.deposit(amount);
+        account.setBalance(account.getBalance() + amount);
         accountRepository.save(account);
         return ResponseEntity.status(200).body(account);
     }
@@ -69,21 +85,20 @@ public class AccountServiceImpl implements AccountService {
                 return ResponseEntity.status(422).body(message);
             }
         }
-        account.withdraw(amount);
+        account.setBalance(account.getBalance() - amount);
         accountRepository.save(account);
         return ResponseEntity.status(200).body(account);
     }
 
     @Override
-    public ResponseEntity<Object> deleteAccount(Long id) {
+    public ResponseEntity<?> deleteAccount(Long id) {
         Optional<Account> account = getAccountId(id);
-        if (account.isPresent()){
+        if (account.isPresent()) {
             accountRepository.deleteById(id);
-            String message = "Account successfully deleted";
-            return ResponseEntity.status(200).body(message);
+            return ResponseEntity.status(200).body("Account successfully deleted");
+        } else {
+            return ResponseEntity.status(404).body("Account not found");
         }
-        String message = "Account not found";
-        return ResponseEntity.status(404).body(message);
     }
 
     @Override
@@ -92,9 +107,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     //Metodo para generar el numero de cuenta
-    private String generateAccountNumber() {
+    public String generateAccountNumber() {
         Random random = new Random();
-        int number = 100000 + random.nextInt(900000); // Genera un número entre 100000 y 999999
+        int number = 100000 + random.nextInt(900000);
         return String.valueOf(number);
     }
 
@@ -102,4 +117,33 @@ public class AccountServiceImpl implements AccountService {
     public Optional<Account> getAccountByNumber(String accountNumber) {
         return accountRepository.findByAccountNumber(accountNumber);
     }
+
+    @Override
+    public ResponseEntity<Object> tDeposit(String accountNumber, double amount){
+        Optional<Account> accountD = accountRepository.findByAccountNumber(accountNumber);
+        if (accountD.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        long id = accountD.get().getId();
+        ResponseEntity<Object> updatedAccount = deposit(id, amount);
+        if (updatedAccount == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(updatedAccount);
+    }
+
+    @Override
+    public ResponseEntity<Object> tWithdrawal(String accountNumber, double amount){
+        Optional<Account> accountD = accountRepository.findByAccountNumber(accountNumber);
+        if (accountD.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        long id = accountD.get().getId();
+        ResponseEntity<Object> updatedAccount = withdraw(id, amount);
+        if (updatedAccount == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(updatedAccount);
+    }
+
 }

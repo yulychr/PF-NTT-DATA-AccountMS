@@ -4,8 +4,6 @@ public class DepositRequestDTO {
     private String accountNumber;
     private double amount;
 
-    // Constructor, getters y setters
-
     public DepositRequestDTO(String accountNumber, double amount) {
         this.accountNumber = accountNumber;
         this.amount = amount;

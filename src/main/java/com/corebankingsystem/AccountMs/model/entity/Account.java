@@ -45,20 +45,4 @@ public class Account {
         corriente
     }
 
-    //Metodo para depositar
-    public void deposit(double amount){
-        if (amount > 0) {
-            this.balance += amount;
-        }
-    }
-
-    // Método para retirar
-    public void withdraw(Double amount) {
-        if (amount > 0) {
-            this.balance -= amount;
-        }
-    }
-
-
-
 }

@@ -4,7 +4,6 @@ public class WithdrawalRequestDTO {
     private String accountNumber;
     private double amount;
 
-    // Constructor, getters y setters
 
     public WithdrawalRequestDTO(String accountNumber, double amount) {
         this.accountNumber = accountNumber;

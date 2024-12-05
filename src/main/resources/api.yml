@@ -19,7 +19,7 @@ tags:
     description: Everything about accaunt
 
 paths:
-  /api/cuentas:
+  /accounts/:
     post:
       tags:
         - account
@@ -40,6 +40,36 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Account"
+        "400":
+          description: "Bad request due to invalid data."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelApiResponse"
+              examples:
+                invalidAmount:
+                  summary: Invalid create account
+                  value:
+                    code: "400"
+                    message: "Balance must be positive."
+                    details:
+                      field: "balance"
+                      issue: "invalid_amount"
+        "404":
+          description: "Customer not found."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelApiResponse"
+              examples:
+                invalidAmount:
+                  summary: Invalid deposit amount
+                  value:
+                    code: "404"
+                    message: "The Customer with ID {account.getCustomerId()} not exist"
+                    details:
+                      field: "amount"
+                      issue: "invalid_amount"
         "422":
           description: Validation exception, customerId not valid
           content:
@@ -80,7 +110,7 @@ paths:
           description: Accounts not found.
         "500":
           description: Internal server error.
-  /api/cuentas/{id}:
+  /accounts/{id}:
     get:
       tags:
         - account
@@ -136,7 +166,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ModelApiResponse"
 
-  /api/cuentas/{id}/deposit:
+  /accounts/{id}/deposit:
     put:
       tags:
         - account
@@ -193,7 +223,7 @@ paths:
                       field: "amount"
                       issue: "invalid_amount"
 
-  /api/cuentas/{id}/withdrawal:
+  /accounts/{id}/withdrawal:
     put:
       tags:
         - account
